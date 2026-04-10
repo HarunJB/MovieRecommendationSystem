@@ -1,0 +1,75 @@
+{% extends "base.html" %} {% block title %}Get Started — CineMatch{% endblock %}
+{% block content %}
+<div class="container py-5">
+  <div class="text-center mb-5">
+    <h2 class="fw-bold">Welcome, {{ current_user.username }}!</h2>
+    <p class="text-muted fs-5">
+      Rate 20 movies so we can personalise your recommendations.<br />
+      The more honest your ratings, the better your recommendations will be.
+    </p>
+    <!-- Progress bar -->
+    <div class="d-flex align-items-center justify-content-center gap-3 mt-3">
+      <span class="text-muted" id="progress-text">0 / 20 rated</span>
+      <div class="progress" style="width: 260px; height: 10px">
+        <div
+          class="progress-bar"
+          id="progress-bar"
+          role="progressbar"
+          style="width: 0%"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Genre filter -->
+  <div
+    class="d-flex flex-wrap gap-2 justify-content-center mb-4"
+    id="genre-filters"
+  >
+    <button
+      class="btn btn-sm btn-outline-secondary genre-btn active"
+      data-genre="all"
+      onclick="setGenre('all', this)"
+    >
+      All
+    </button>
+  </div>
+
+  <!-- Search -->
+  <div class="row justify-content-center mb-4">
+    <div class="col-md-5">
+      <input
+        type="text"
+        class="form-control"
+        id="movie-search"
+        placeholder="Search for a movie..."
+      />
+    </div>
+  </div>
+
+  <!-- Movie grid -->
+  <div class="row g-3" id="movie-grid">
+    <div class="col-12 text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-2 text-muted">Loading movies...</p>
+    </div>
+  </div>
+
+  <!-- Sticky bottom bar -->
+  <div class="onboarding-footer" id="onboarding-footer" style="display: none">
+    <div class="container d-flex align-items-center justify-content-between">
+      <span><strong id="footer-count">0</strong> / 20 movies rated</span>
+      <button
+        class="btn btn-primary btn-lg px-5"
+        id="finish-btn"
+        disabled
+        onclick="finishOnboarding()"
+      >
+        Get My Recommendations <i class="bi bi-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
+<script src="{{ url_for('static', filename='js/onboarding.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — CineMatch{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h3 class="fw-bold mb-0">Your Recommendations</h3>
+            <p class="text-muted mb-0">Personalised picks just for you</p>
+        </div>
+        <a href="{{ url_for('recommendations.profile') }}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-sliders"></i> Rate More Movies
+        </a>
+    </div>
+
+    <!-- Recommendations grid -->
+    <div class="row g-4" id="recommendations-grid">
+        <div class="col-12 text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 text-muted">Loading your recommendations...</p>
+        </div>
+    </div>
+
+    <!-- Empty state (hidden by default) -->
+    <div id="empty-state" class="text-center py-5" style="display:none !important;">
+        <i class="bi bi-film fs-1 text-muted"></i>
+        <h5 class="mt-3">No recommendations yet</h5>
+        <p class="text-muted">Rate more movies to improve your suggestions.</p>
+        <a href="{{ url_for('recommendations.profile') }}" class="btn btn-primary">Rate Movies</a>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

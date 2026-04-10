@@ -1,0 +1,298 @@
+:root {
+    --primary: #e50914;
+    --primary-dark: #b20710;
+    --bg-dark: #141414;
+    --bg-card: #1f1f1f;
+    --bg-card-hover: #2a2a2a;
+    --text-muted: #ccc;
+    --border: #333;
+    --star-color: #f5c518;
+}
+
+/* ── Base ───────────────────────────────────────────────── */
+body {
+    background-color: var(--bg-dark);
+    color: #f0f0f0;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+}
+
+a { color: var(--primary); }
+a:hover { color: var(--primary-dark); }
+
+/* ── Navbar ─────────────────────────────────────────────── */
+#main-navbar {
+    background-color: #0a0a0a;
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 0;
+}
+
+.navbar-brand {
+    color: var(--primary) !important;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+.nav-link {
+    color: #ccc !important;
+    transition: color 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: #fff !important;
+}
+
+/* ── Auth pages ─────────────────────────────────────────── */
+.auth-wrapper {
+    background: radial-gradient(ellipse at top, #1a0a0a 0%, var(--bg-dark) 70%);
+}
+
+.auth-brand {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.auth-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.auth-card .form-control {
+    background-color: #2a2a2a;
+    border-color: var(--border);
+    color: #fff;
+}
+
+.auth-card .form-control:focus {
+    background-color: #333;
+    border-color: var(--primary);
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(229, 9, 20, 0.25);
+}
+
+.auth-card .form-label { color: #ccc; }
+
+.card-title { color: #ccc }
+
+
+/* ── Buttons ────────────────────────────────────────────── */
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.btn-outline-secondary {
+    color: #aaa;
+    border-color: var(--border);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--bg-card-hover);
+    color: #fff;
+    border-color: #555;
+}
+
+/* ── Cards ──────────────────────────────────────────────── */
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.movie-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5) !important;
+    border-color: #555;
+    cursor: pointer;
+}
+
+.movie-poster {
+    width: 100%;
+    height: 160px;
+    background-color: #2a2a2a;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    font-size: 2.5rem;
+}
+
+.movie-poster-large {
+    width: 100%;
+    height: 320px;
+    background-color: var(--bg-card);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 4rem;
+}
+
+/* ── Star rating ────────────────────────────────────────── */
+.star-rating {
+    display: flex;
+    gap: 4px;
+}
+
+.star {
+    font-size: 1.4rem;
+    color: var(--border);
+    cursor: pointer;
+    transition: color 0.15s, transform 0.1s;
+}
+
+.star:hover,
+.star.rated {
+    color: var(--star-color);
+}
+
+.star:hover {
+    transform: scale(1.15);
+}
+
+/* ── Onboarding ─────────────────────────────────────────── */
+.genre-btn.active {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+
+.movie-card {
+    height: 100%;
+}
+
+.movie-card.selected {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary);
+}
+
+.movie-card .card-body {
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.movie-card .card-body p.movie-title {
+    color: #ccc;
+}
+
+.container .text-center p.text-muted {
+    color: #ccc !important;
+}
+
+.container .text-center span#progress-text {
+    color: #ccc !important;
+}
+
+.movie-card .card-body small.text-muted {
+    color: #ccc !important; 
+}
+
+.movie-card .movie-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3;
+    min-height: 2.6em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.onboarding-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #0a0a0a;
+    border-top: 1px solid var(--border);
+    padding: 1rem 0;
+    z-index: 1000;
+}
+
+.progress-bar {
+    background-color: var(--primary);
+    transition: width 0.4s ease;
+}
+
+/* ── Profile ────────────────────────────────────────────── */
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+/* ── Forms ──────────────────────────────────────────────── */
+.form-control {
+    background-color: #2a2a2a;
+    border-color: var(--border);
+    color: #fff;
+}
+
+.form-control:focus {
+    background-color: #333;
+    border-color: var(--primary);
+    color: #fff;
+    box-shadow: 0 0 0 0.2rem rgba(229, 9, 20, 0.2);
+}
+
+.form-control::placeholder { color: #666; }
+
+/* ── Badges ─────────────────────────────────────────────── */
+.badge.bg-secondary {
+    background-color: #333 !important;
+    color: #ccc;
+    font-weight: 400;
+}
+
+/* ── Alerts ─────────────────────────────────────────────── */
+.alert {
+    border-radius: 8px;
+    border: none;
+}
+
+.alert-danger {
+    background-color: rgba(229, 9, 20, 0.15);
+    color: #ff6b6b;
+}
+
+.alert-success {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: #6fcf97;
+}
+
+.alert-warning {
+    background-color: rgba(255, 193, 7, 0.15);
+    color: #f2c94c;
+}
+
+/* ── Spinner ────────────────────────────────────────────── */
+.spinner-border { color: var(--primary) !important; }
+
+/* ── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: #444; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #666; }
+
+.auth-wrapper .text-muted {
+    color: #ccc !important;
+}
+
+.auth-wrapper p.text-center {
+    color: #ccc !important;
+}
