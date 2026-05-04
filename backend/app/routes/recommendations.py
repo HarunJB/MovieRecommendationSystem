@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, jsonify
 from flask_login import login_required, current_user
+from app.services.hybrid import get_hybrid_recommendations
 
 recommendations = Blueprint('recommendations', __name__)
 
@@ -19,4 +20,5 @@ def profile():
 @recommendations.route('/api/recommendations')
 @login_required
 def get_recommendations():
-    return jsonify({'recommendations': []})
+    recs = get_hybrid_recommendations(current_user.user_id, n=10)
+    return jsonify({'recommendations': recs})

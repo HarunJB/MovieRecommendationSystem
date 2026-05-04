@@ -36,6 +36,7 @@ class Movie(db.Model):
             "avg_rating": self.avg_rating,
             "rating_count": self.rating_count,
             "genres": [g.name for g in self.genres],
+            "poster_path": self.poster_path
         }
 
     def __repr__(self):
