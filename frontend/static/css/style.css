@@ -182,10 +182,9 @@ a:hover { color: var(--primary-dark); }
 }
 
 .movie-card .card-body {
-    padding: 0.75rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    background-color: var(--bg-card);
 }
 
 .movie-card .card-body p.movie-title {
@@ -302,4 +301,105 @@ a:hover { color: var(--primary-dark); }
 
 .auth-wrapper p.text-center {
     color: #ccc !important;
+}
+
+.rating-item .fw-bold,
+.search-result-item .fw-bold {
+    color: #ffffff;
+}
+
+.rating-item small,
+.search-result-item small {
+    color: #aaa;
+}
+
+/* Profile left card */
+.profile-avatar ~ h4 {
+    color: #ffffff;
+}
+
+#total-ratings,
+#avg-rating {
+    color: #ffffff;
+}
+
+/* Rate More Movies section */
+.card-body h5 {
+    color: #ffffff;
+}
+
+.card-body p.text-muted {
+    color: #aaa !important;
+}
+
+/* Your Ratings - year */
+.rating-item small.text-muted {
+    color: #aaa !important;
+}
+
+/* Stars in ratings list */
+.rating-item small:last-child {
+    color: #aaa;
+}
+
+/* Member since */
+.card-body p.small {
+    color: #aaa !important;
+}
+
+.text-muted.small,
+small.text-muted {
+    color: #aaa !important;
+}
+
+.col-md-4 .card {
+    position: sticky;
+    top: 20px;
+    max-height: calc(100vh - 40px);
+    overflow: hidden;
+}
+
+.col-md-4 {
+    align-self: flex-start;
+    position: sticky;
+    top: 20px;
+}
+
+#sort-select {
+    background-color: #2a2a2a;
+    border-color: var(--border);
+    color: #fff;
+}
+
+#ratings-list {
+    padding-right: 15px;
+}
+
+/* Movie detail page */
+.movie-detail-title {
+    color: #ffffff;
+}
+
+.movie-detail-year {
+    color: #aaa;
+}
+
+.movie-detail-meta {
+    color: #aaa;
+}
+
+.movie-detail-rating-label {
+    color: #aaa;
+}
+
+.movie-detail-your-rating {
+    color: #ffffff;
+}
+
+.dashboard-subtitle {
+    color: #aaa;
+}
+
+.movie-title {
+    color: #ffffff;
 }

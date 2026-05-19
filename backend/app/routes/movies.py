@@ -7,14 +7,16 @@ from app.models.interaction import UserMovieInteraction
 movies_bp = Blueprint("movies", __name__)
 
 
-@movies_bp.route("/movie/<int:movie_id>")
+@movies_bp.route('/movie/<int:movie_id>')
 @login_required
 def movie_detail(movie_id):
     movie = Movie.query.get_or_404(movie_id)
     user_interaction = UserMovieInteraction.query.filter_by(
-        user_id=current_user.user_id, movie_id=movie_id
+        user_id=current_user.user_id,
+        movie_id=movie_id
     ).first()
-    return render_template("movie.html", movie=movie, user_interaction=user_interaction)
+    source = request.args.get('from', 'dashboard')
+    return render_template('movie.html', movie=movie, user_interaction=user_interaction, source=source)
 
 
 @movies_bp.route("/api/movies/onboarding")
@@ -67,3 +69,56 @@ def rate_movie():
 
     db.session.commit()
     return jsonify({"success": True})
+
+
+@movies_bp.route("/api/movies/user-ratings")
+@login_required
+def get_user_ratings():
+    page = request.args.get("page", 1, type=int)
+    per_page = 10
+
+    interactions = (
+        UserMovieInteraction.query.filter_by(user_id=current_user.user_id)
+        .order_by(UserMovieInteraction.rated_at.desc())
+        .paginate(page=page, per_page=per_page, error_out=False)
+    )
+
+    result = []
+    for i in interactions.items:
+        movie = Movie.query.get(i.movie_id)
+        if movie:
+            d = movie.to_dict()
+            d["user_rating"] = i.rating
+            d["rated_at"] = i.rated_at.isoformat()
+            result.append(d)
+
+    return jsonify(
+        {
+            "ratings": result,
+            "total": interactions.total,
+            "pages": interactions.pages,
+            "current_page": page,
+        }
+    )
+
+
+@movies_bp.route("/api/movies/user-stats")
+@login_required
+def get_user_stats():
+    from sqlalchemy import func
+
+    result = (
+        db.session.query(
+            func.count(UserMovieInteraction.rating).label("total"),
+            func.avg(UserMovieInteraction.rating).label("avg"),
+        )
+        .filter_by(user_id=current_user.user_id)
+        .first()
+    )
+
+    return jsonify(
+        {
+            "total_ratings": result.total or 0,
+            "avg_rating": round(float(result.avg), 1) if result.avg else 0,
+        }
+    )

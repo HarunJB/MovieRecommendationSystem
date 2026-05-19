@@ -1,101 +1,104 @@
-{% extends "base.html" %}
-
-{% block title %}{{ movie.title }} — CineMatch{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}{{ movie.title }} — CineMatch{%
+endblock %} {% block content %}
 <div class="container py-4">
+  {% if source == 'profile' %}
+  <a
+    href="{{ url_for('recommendations.profile') }}"
+    class="btn btn-outline-secondary btn-sm mb-4"
+  >
+    <i class="bi bi-arrow-left"></i> Back to Profile
+  </a>
+  {% else %}
+  <a
+    href="{{ url_for('recommendations.dashboard') }}"
+    class="btn btn-outline-secondary btn-sm mb-4"
+  >
+    <i class="bi bi-arrow-left"></i> Back to Dashboard
+  </a>
+  {% endif %}
 
-    <a href="{{ url_for('recommendations.dashboard') }}" class="btn btn-outline-secondary btn-sm mb-4">
-        <i class="bi bi-arrow-left"></i> Back to Dashboard
-    </a>
-
-    <div class="row g-4">
-
-        <!-- Movie poster placeholder -->
-        <div class="col-md-3 text-center">
-            <div class="movie-poster-large d-flex align-items-center justify-content-center">
-                <i class="bi bi-film fs-1 text-muted"></i>
-            </div>
-        </div>
-
-        <!-- Movie details -->
-        <div class="col-md-9">
-            <h2 class="fw-bold mb-1">{{ movie.title }}</h2>
-            <p class="text-muted mb-2">{{ movie.release_year or 'Year unknown' }}</p>
-
-            <!-- Genres -->
-            <div class="mb-3">
-                {% for genre in movie.genres %}
-                    <span class="badge bg-secondary me-1">{{ genre.name }}</span>
-                {% endfor %}
-            </div>
-
-            <!-- Ratings summary -->
-            <div class="d-flex align-items-center gap-4 mb-4">
-                <div>
-                    <span class="fs-4 fw-bold text-warning">
-                        <i class="bi bi-star-fill"></i> {{ "%.1f"|format(movie.avg_rating) }}
-                    </span>
-                    <span class="text-muted ms-1">/ 5.0</span>
-                </div>
-                <div class="text-muted">
-                    <i class="bi bi-people"></i> {{ movie.rating_count }} ratings
-                </div>
-                {% if movie.imdb_id %}
-                <a href="https://www.imdb.com/title/tt{{ '%07d'|format(movie.imdb_id) }}/"
-                   target="_blank" class="btn btn-outline-warning btn-sm">
-                    <i class="bi bi-box-arrow-up-right"></i> IMDb
-                </a>
-                {% endif %}
-            </div>
-
-            <!-- User's rating -->
-            <div class="card shadow-sm p-3" style="max-width: 360px;">
-                <p class="mb-2 fw-bold">Your Rating</p>
-                <div class="star-rating" id="star-rating"
-                     data-movie-id="{{ movie.movie_id }}"
-                     data-current="{{ user_interaction.rating if user_interaction else 0 }}">
-                    {% for i in range(1, 6) %}
-                    <i class="bi bi-star-fill star"
-                       data-value="{{ i }}"
-                       onclick="setRating({{ movie.movie_id }}, {{ i }})"></i>
-                    {% endfor %}
-                </div>
-                <small class="text-muted mt-1" id="rating-label">
-                    {% if user_interaction and user_interaction.rating %}
-                        You rated this {{ user_interaction.rating }}/5
-                    {% else %}
-                        Click a star to rate
-                    {% endif %}
-                </small>
-            </div>
-        </div>
+  <div class="row g-4">
+    <!-- Movie poster -->
+    <div class="col-md-3 text-center">
+      {% if movie.poster_path %}
+      <img
+        src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}"
+        alt="{{ movie.title }}"
+        class="img-fluid rounded shadow"
+        style="width: 100%; object-fit: cover; border-radius: 10px"
+      />
+      {% else %}
+      <div
+        class="movie-poster-large d-flex align-items-center justify-content-center"
+      >
+        <i class="bi bi-film fs-1 text-muted"></i>
+      </div>
+      {% endif %}
     </div>
+
+    <!-- Movie details -->
+    <div class="col-md-9">
+      <h2 class="fw-bold mb-1 movie-detail-title">{{ movie.title }}</h2>
+      <p class="movie-detail-year mb-2">
+        {{ movie.release_year or 'Year unknown' }}
+      </p>
+
+      <!-- Genres -->
+      <div class="mb-3">
+        {% for genre in movie.genres %}
+        <span class="badge bg-secondary me-1">{{ genre.name }}</span>
+        {% endfor %}
+      </div>
+
+      <!-- Ratings summary -->
+      <div class="d-flex align-items-center gap-4 mb-4">
+        <div>
+          <span class="fs-4 fw-bold text-warning">
+            <i class="bi bi-star-fill"></i> {{ "%.1f"|format(movie.avg_rating)
+            }}
+          </span>
+          <span class="movie-detail-meta ms-1">/ 5.0</span>
+        </div>
+        <div class="movie-detail-meta">
+          <i class="bi bi-people"></i> {{ movie.rating_count }} ratings
+        </div>
+        {% if movie.imdb_id %}
+        <a
+          href="https://www.imdb.com/title/tt{{ '%07d'|format(movie.imdb_id) }}/"
+          target="_blank"
+          class="btn btn-outline-warning btn-sm"
+        >
+          <i class="bi bi-box-arrow-up-right"></i> IMDb
+        </a>
+        {% endif %}
+      </div>
+
+      <!-- User's rating -->
+      <div class="card shadow-sm p-3" style="max-width: 360px">
+        <p class="mb-2 fw-bold movie-detail-your-rating">Your Rating</p>
+        <div
+          class="star-rating"
+          id="star-rating"
+          data-movie-id="{{ movie.movie_id }}"
+          data-current="{{ user_interaction.rating if user_interaction else 0 }}"
+        >
+          {% for i in range(1, 6) %}
+          <i
+            class="bi bi-star-fill star"
+            data-value="{{ i }}"
+            onclick="setRating({{ movie.movie_id }}, {{ i }})"
+          ></i>
+          {% endfor %}
+        </div>
+        <small class="movie-detail-rating-label mt-1" id="rating-label">
+          {% if user_interaction and user_interaction.rating %} You rated this
+          {{ user_interaction.rating | int }}/5 {% else %} Click a star to rate
+          {% endif %}
+        </small>
+      </div>
+    </div>
+  </div>
 </div>
-{% endblock %}
-
-{% block extra_js %}
-<script src="{{ url_for('static', filename='js/api.js') }}"></script>
-<script>
-    // Highlight stars on page load if already rated
-    const currentRating = parseFloat(document.getElementById('star-rating').dataset.current) || 0;
-    highlightStars(currentRating);
-
-    function highlightStars(value) {
-        document.querySelectorAll('.star').forEach(star => {
-            star.classList.toggle('rated', parseInt(star.dataset.value) <= value);
-        });
-    }
-
-    async function setRating(movieId, value) {
-        highlightStars(value);
-        document.getElementById('rating-label').textContent = `You rated this ${value}/5`;
-        await rateMovie(movieId, value, false);
-    }
-
-    document.querySelectorAll('.star').forEach(star => {
-        star.addEventListener('mouseover', () => highlightStars(parseInt(star.dataset.value)));
-        star.addEventListener('mouseleave', () => highlightStars(currentRating));
-    });
-</script>
+{% endblock %} {% block extra_js %}
+<script src="{{ url_for('static', filename='js/movie.js') }}"></script>
 {% endblock %}

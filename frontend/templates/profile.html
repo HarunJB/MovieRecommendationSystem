@@ -1,76 +1,95 @@
-{% extends "base.html" %}
-
-{% block title %}Profile — CineMatch{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Profile — CineMatch{% endblock %} {%
+block content %}
 <div class="container py-4">
-
-    <div class="row g-4">
-
-        <!-- Left: User info -->
-        <div class="col-md-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body text-center p-4">
-                    <div class="profile-avatar mx-auto mb-3">
-                        <i class="bi bi-person-fill fs-1"></i>
-                    </div>
-                    <h4 class="fw-bold mb-0">{{ current_user.username }}</h4>
-                    <p class="text-muted mb-3">{{ current_user.email }}</p>
-                    <hr>
-                    <div class="row text-center">
-                        <div class="col">
-                            <h5 class="fw-bold mb-0" id="total-ratings">—</h5>
-                            <small class="text-muted">Movies Rated</small>
-                        </div>
-                        <div class="col">
-                            <h5 class="fw-bold mb-0" id="avg-rating">—</h5>
-                            <small class="text-muted">Avg Rating</small>
-                        </div>
-                    </div>
-                    <hr>
-                    <p class="text-muted small mb-0">
-                        Member since {{ current_user.created_at.strftime('%B %Y') }}
-                    </p>
-                </div>
+  <div class="row g-4 align-items-center">
+    <!-- Left: User info -->
+    <div class="col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body text-center p-4">
+          <div class="profile-avatar mx-auto mb-3">
+            <i class="bi bi-person-fill fs-1"></i>
+          </div>
+          <h4 class="fw-bold mb-0">{{ current_user.username }}</h4>
+          <p class="text-muted mb-3">{{ current_user.email }}</p>
+          <hr />
+          <div class="row text-center">
+            <div class="col">
+              <h5 class="fw-bold mb-0" id="total-ratings">—</h5>
+              <small class="text-muted">Movies Rated</small>
             </div>
+            <div class="col">
+              <h5 class="fw-bold mb-0" id="avg-rating">—</h5>
+              <small class="text-muted">Avg Rating</small>
+            </div>
+          </div>
+          <hr />
+          <p class="text-muted small mb-0">
+            Member since {{ current_user.created_at.strftime('%B %Y') }}
+          </p>
         </div>
-
-        <!-- Right: Rating history + rate more -->
-        <div class="col-md-8">
-
-            <!-- Rate more movies -->
-            <div class="card shadow-sm mb-4">
-                <div class="card-body p-4">
-                    <h5 class="fw-bold mb-1">Rate More Movies</h5>
-                    <p class="text-muted small mb-3">The more you rate, the better your recommendations become.</p>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="profile-search" placeholder="Search for a movie to rate...">
-                        <button class="btn btn-primary" onclick="searchMovies()">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </div>
-                    <div id="search-results" class="row g-2"></div>
-                </div>
-            </div>
-
-            <!-- Rating history -->
-            <div class="card shadow-sm">
-                <div class="card-body p-4">
-                    <h5 class="fw-bold mb-3">Your Ratings</h5>
-                    <div id="ratings-list">
-                        <div class="text-center py-3">
-                            <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                            <span class="ms-2 text-muted">Loading...</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+      </div>
     </div>
-</div>
-{% endblock %}
 
-{% block extra_js %}
-<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <!-- Right: Rating history + rate more -->
+    <div class="col-md-8">
+      <!-- Rate more movies -->
+      <div
+        class="card shadow-sm mb-4"
+        style="max-height: 420px; overflow: hidden"
+      >
+        <div class="card-body p-4">
+          <h5 class="fw-bold mb-1">Rate More Movies</h5>
+          <p class="text-muted small mb-3">
+            The more you rate, the better your recommendations become.
+          </p>
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="profile-search"
+              placeholder="Search for a movie to rate..."
+            />
+            <button class="btn btn-primary" onclick="searchMovies()">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+          <div
+            id="search-results"
+            class="row g-2"
+            style="max-height: 280px; overflow-y: auto"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Rating history -->
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <h5 class="fw-bold mb-0">Your Ratings</h5>
+            <select
+              class="form-select form-select-sm w-auto"
+              id="sort-select"
+              onchange="sortRatings()"
+            >
+              <option value="date">Most Recent</option>
+              <option value="highest">Highest Rated</option>
+              <option value="lowest">Lowest Rated</option>
+            </select>
+          </div>
+          <div id="ratings-list" style="max-height: 400px; overflow-y: auto">
+            <div class="text-center py-3">
+              <div
+                class="spinner-border spinner-border-sm text-primary"
+                role="status"
+              ></div>
+              <span class="ms-2 text-muted">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block extra_js %}
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
 {% endblock %}
